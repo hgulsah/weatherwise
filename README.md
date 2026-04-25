@@ -95,17 +95,26 @@ End-to-end deployment workflow:
 ---
 
 ## 📂 Repository Structure
+
+```text
 app/
-├── main.py # Flask application
-└── requirements.txt # Python dependencies
+├── main.py              # Flask application
+└── requirements.txt     # Python dependencies
 
 k8s/
-├── deployment.yaml # Kubernetes Deployment
-├── service.yaml # Kubernetes Service (LoadBalancer)
-└── argocd-app.yaml # Argo CD Application
+├── deployment.yaml      # Kubernetes Deployment
+├── service.yaml         # Kubernetes Service (LoadBalancer)
+└── argocd-app.yaml      # Argo CD Application
 
-Dockerfile # Container build instructions
+diagrams/
+└── weatherwise-architecture.png
 
+screenshots/
+├── weatherwise-home.png
+└── weatherwise-result.png
+
+Dockerfile               # Container build instructions
+```
 
 ---
 
@@ -114,40 +123,54 @@ Dockerfile # Container build instructions
 ```bash
 docker build -t weatherwise .
 docker run -p 5000:5000 weatherwise
+```
 
 Then open: http://localhost:5000
 
-☸️ Deploy to Kubernetes
+---
+
+## ☸️ Deploy to Kubernetes
+
+```bash
 kubectl apply -f k8s/
+```
 
 Argo CD will handle continuous synchronization once configured.
 
-🔄 CI/CD (Planned Improvements)
-GitLab CI pipeline for automated builds and deployments
-Terraform validation and security scanning (tfsec, tflint)
-Container image scanning (Trivy)
-Automated promotion from dev → production
-📊 Future Improvements
-Add Prometheus & Grafana for monitoring
-Implement centralized logging (Loki or ELK)
-Introduce Helm for templating
-Add autoscaling (HPA)
-Improve UI/UX
-📸 Screenshots
-Home
+---
 
-Result
+## 🔄 CI/CD — Planned Improvements
 
-🧠 Key Takeaways
+- GitLab CI pipeline for automated builds and deployments
+- Terraform validation and security scanning with tfsec and tflint
+- Container image scanning with Trivy
+- Automated promotion from dev to production
+
+---
+
+## 📊 Future Improvements
+
+- Add Prometheus and Grafana for monitoring
+- Implement centralized logging with Loki or ELK
+- Introduce Helm for templating
+- Add autoscaling with HPA
+- Improve UI/UX
+
+---
+
+## 🧠 Key Takeaways
 
 This project demonstrates:
 
-End-to-end DevOps workflow
-GitOps deployment strategy
-Kubernetes-based application management
-Cloud-native architecture on AWS
+- End-to-end DevOps workflow
+- GitOps deployment strategy
+- Kubernetes-based application management
+- Cloud-native architecture on AWS
 
-👤 Author
-Gulsah Ihtiyar
-DevOps / Cloud Engineer
+---
+
+## 👤 Author
+
+**Gulsah Ihtiyar**  
+DevOps / Cloud Engineer  
 CKA Certified | Terraform Associate
