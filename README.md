@@ -61,7 +61,7 @@ End-to-end deployment workflow:
 
 ### WeatherWise – GitOps-Based Architecture on AWS EKS
 
-![WeatherWise Architecture](screenshots/weatherwise-architecture.png)
+![WeatherWise Architecture](diagrams/weatherwise-architecture.png)
 
 ---
 
