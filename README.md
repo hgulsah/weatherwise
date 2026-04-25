@@ -59,6 +59,10 @@ End-to-end deployment workflow:
 5. Argo CD syncs and deploys to EKS cluster  
 6. AWS LoadBalancer exposes the application  
 
+### WeatherWise – GitOps-Based Architecture on AWS EKS
+
+![WeatherWise Architecture](screenshots/weatherwise-architecture.png)
+
 ---
 
 ## 📸 Screenshots
