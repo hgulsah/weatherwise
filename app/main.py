@@ -29,18 +29,33 @@ def get_advice(weather, temp):
         advice.append("🎵 <a href='https://music.youtube.com/search?q=chill+foggy+morning+playlist' target='_blank'>Chill Foggy Morning Playlist →</a>")
     
     elif weather == "Clear" and temp > 30:
-        advice.append("☀️ Apply sunscreen! It's hot out there!")
-        advice.append("💧 Stay hydrated — drink plenty of water!")
+        advice.append("🌡️ Dangerous heat! Stay in the shade and avoid going out if possible!")
+        advice.append("🧢 Wear a hat — sun is intense!")
+        advice.append("💧 Drink lots of water — stay hydrated!")
         advice.append("🎵 <a href='https://music.youtube.com/search?q=summer+hits+playlist' target='_blank'>Summer Hits Playlist on YouTube Music →</a>")
-    
-    elif weather == "Clear" and 15 <= temp <= 30:
+
+    elif weather == "Clear" and 25 <= temp <= 30:
+        advice.append("🌡️ It's getting warm — wear a hat and stay hydrated! 🧢")
+        advice.append("💧 Keep a water bottle with you!")
+        advice.append("🎵 <a href='https://music.youtube.com/search?q=summer+vibes+playlist' target='_blank'>Summer Vibes Playlist on YouTube Music →</a>")
+
+    elif weather == "Clear" and 15 <= temp < 25:
         advice.append("😎 What a beautiful day — be grateful for this moment! 🙏")
         advice.append("🌳 Go for a walk, touch some grass!")
         advice.append("🎵 <a href='https://music.youtube.com/search?q=happy+sunny+day+playlist' target='_blank'>Happy Sunny Day Playlist on YouTube Music →</a>")
+
+    elif weather == "Clouds" and temp > 28:
+        advice.append("🌡️ It's hot and cloudy — still apply sunscreen!")
+        advice.append("💧 Stay hydrated!")
     
-    elif temp < 5:
+    elif temp < 11:
+        advice.append("🥶 Winter is coming back! Layer up!")
         advice.append("🧥 Wear a heavy coat — it's freezing!")
         advice.append("☕ Hot coffee or tea time!")
+    
+    elif temp < 14:
+        advice.append("🌬️ A bit chilly — maybe grab a light jacket just in case!")
+        advice.append("☕ A warm drink wouldn't hurt!")
     
     else:
         advice.append("🌤️ Looks okay out there — have a great day!")
@@ -53,34 +68,121 @@ HTML = """
 <head>
     <title>WeatherWise</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
-        input { padding: 10px; width: 70%; font-size: 16px; }
-        button { padding: 10px 20px; font-size: 16px; background: #0077cc; color: white; border: none; cursor: pointer; }
-        .result { margin-top: 30px; padding: 20px; background: #f0f8ff; border-radius: 8px; }
-        .advice { font-size: 18px; margin: 5px 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 580px;
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+        }
+        h1 {
+            color: white;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        p.subtitle {
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        input {
+            flex: 1;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+        input::placeholder { color: rgba(255,255,255,0.4); }
+        input:focus { border-color: #e94560; }
+        button {
+            padding: 14px 24px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(135deg, #e94560, #0f3460);
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+        button:hover { opacity: 0.85; }
+        .result {
+            background: rgba(255,255,255,0.07);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .result h2 {
+            color: white;
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+        .meta {
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+        hr { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 16px 0; }
+        .advice {
+            color: white;
+            font-size: 1.05rem;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        .advice a { color: #e94560; text-decoration: none; }
+        .advice a:hover { text-decoration: underline; }
+        .error { color: #e94560; text-align: center; margin-top: 10px; }
     </style>
 </head>
 <body>
-    <h1>🌍 WeatherWise</h1>
-    <p>Enter a city to get weather-based recommendations</p>
-    <form method="GET" action="/weather">
-        <input type="text" name="city" placeholder="e.g. New York, Istanbul, Tokyo" value="{{ city }}">
-        <button type="submit">Check</button>
-    </form>
-    {% if result %}
-    <div class="result">
-        <h2>{{ result.city }}, {{ result.country }}</h2>
-        <p>🌡️ Temperature: {{ result.temp }}°C</p>
-        <p>🌤️ Condition: {{ result.condition }}</p>
-        <hr>
-        {% for a in result.advice %}
-        <p class="advice">{{ a }}</p>
-        {% endfor %}
+    <div class="container">
+        <h1>🌍 WeatherWise</h1>
+        <p class="subtitle">Enter a city to get weather-based recommendations</p>
+        <form method="GET" action="/weather">
+            <div class="search-box">
+                <input type="text" name="city" placeholder="e.g. New York, Istanbul, Tokyo" value="{{ city }}">
+                <button type="submit">Check</button>
+            </div>
+        </form>
+        {% if result %}
+        <div class="result">
+            <h2>{{ result.city }}, {{ result.country }}</h2>
+            <div class="meta">
+                🌡️ {{ result.temp }}°C &nbsp;|&nbsp; 🌤️ {{ result.condition }}
+            </div>
+            <hr>
+            {% for a in result.advice %}
+            <p class="advice">{{ a | safe }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
     </div>
-    {% endif %}
-    {% if error %}
-    <p style="color:red">{{ error }}</p>
-    {% endif %}
 </body>
 </html>
 """
