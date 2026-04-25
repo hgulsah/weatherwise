@@ -61,6 +61,16 @@ End-to-end deployment workflow:
 
 ---
 
+## 📸 Screenshots
+
+### Home
+![WeatherWise Home](screenshots/weatherwise-home.png)
+
+### Result
+![WeatherWise Result](screenshots/weatherwise-result.png)
+
+---
+
 ## ✨ Key Features
 
 - GitOps-based deployment using Argo CD  
