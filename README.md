@@ -24,3 +24,24 @@ Enter any city and get personalized recommendations based on current weather con
 - **AWS ELB** — external access
 
 ## Architecture
+
+Code change → Docker build → Docker Hub push → Git push → Argo CD sync → EKS deploy
+
+## Screenshots
+
+### Home
+![WeatherWise Home](screenshots/weatherwise-home.png)
+
+### Result
+![WeatherWise Result](screenshots/weatherwise-result.png)
+
+## Repository Structure
+app/
+├── main.py              # Flask application
+└── requirements.txt     # Python dependencies
+k8s/
+├── deployment.yaml      # Kubernetes Deployment
+├── service.yaml         # Kubernetes Service (LoadBalancer)
+└── argocd-app.yaml      # Argo CD Application
+Dockerfile               # Container build instructions
+
