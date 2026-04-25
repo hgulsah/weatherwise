@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weatherwise
+  labels:
+    app: weatherwise
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: weatherwise
+  template:
+    metadata:
+      labels:
+        app: weatherwise
+    spec:
+      containers:
+      - name: weatherwise
+        image: hgulsah/weatherwise:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: WEATHER_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: weatherwise-secret
+              key: api-key
